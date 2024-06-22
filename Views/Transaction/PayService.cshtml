@@ -1,0 +1,25 @@
+@model Cw9.ViewModels.PayServiceViewModel
+
+<form asp-action="PayService" method="post">
+    <div class="form-group">
+        <label asp-for="ServiceProviderId">Поставщик услуг</label>
+        <select asp-for="ServiceProviderId" class="form-control">
+            @foreach (var provider in ViewBag.ServiceProviders as List<ServiceProvider>)
+            {
+                <option value="@provider.Id">@provider.Name</option>
+            }
+        </select>
+        <span asp-validation-for="ServiceProviderId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Identifier">Личный реквизит</label>
+        <input asp-for="Identifier" class="form-control" />
+        <span asp-validation-for="Identifier" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Amount">Сумма</label>
+        <input asp-for="Amount" class="form-control" />
+        <span asp-validation-for="Amount" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Оплатить</button>
+</form>

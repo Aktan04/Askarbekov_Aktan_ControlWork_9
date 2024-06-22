@@ -115,4 +115,72 @@ public class TransactionController : Controller
         ViewBag.Message = "Перевод успешно выполнен";
         return View();
     }
+    
+     [HttpGet]
+     [Authorize]
+     public async Task<IActionResult> PayService()
+     {
+         var serviceProviders = await _context.ServiceProviders.ToListAsync();
+         ViewBag.ServiceProviders = serviceProviders;
+         return View();
+     }
+
+     [HttpPost]
+     [Authorize]
+     [ValidateAntiForgeryToken]
+     public async Task<IActionResult> PayService(PayServiceViewModel model)
+     {
+         if (!ModelState.IsValid)
+         {
+             var serviceProviders = await _context.ServiceProviders.ToListAsync();
+             ViewBag.ServiceProviders = serviceProviders;
+             return View(model);
+         }
+
+         var user = await _userManager.GetUserAsync(User);
+         if (user == null)
+         {
+             return NotFound("Пользователь не найден");
+         }
+
+         if (user.Balance < model.Amount)
+         {
+             ModelState.AddModelError("Amount", "Недостаточно средств для оплаты");
+             var serviceProviders = await _context.ServiceProviders.ToListAsync();
+             ViewBag.ServiceProviders = serviceProviders;
+             return View(model);
+         }
+
+         var serviceUser = await _context.ServiceUsers.Include(u => u.ServiceProvider)
+             .FirstOrDefaultAsync(su => su.ServiceProviderId == model.ServiceProviderId && su.Identifier == model.Identifier);
+
+         if (serviceUser == null)
+         {
+             ModelState.AddModelError("Identifier", "Реквизит у поставщика услуг не найден");
+             var serviceProviders = await _context.ServiceProviders.ToListAsync();
+             ViewBag.ServiceProviders = serviceProviders;
+             return View(model);
+         }
+
+         user.Balance -= model.Amount;
+         serviceUser.Balance += model.Amount;
+
+         Transaction transaction = new Transaction();
+
+         transaction.FromUserId = user.Id;
+         transaction.ToUserId = null;
+         transaction.Date = DateTime.UtcNow.AddHours(6);
+         transaction.Amount = -model.Amount;
+         transaction.Description = $"Оплата услуг {serviceUser.Identifier} у {serviceUser.ServiceProvider.Name}";
+        
+
+         _context.Transactions.Add(transaction);
+         _context.Users.Update(user);
+         _context.ServiceUsers.Update(serviceUser);
+
+         await _context.SaveChangesAsync();
+
+         ViewBag.Message = "Оплата успешно выполнена";
+         return RedirectToAction("Index");
+     }
 }
