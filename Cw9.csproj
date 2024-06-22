@@ -36,6 +36,10 @@
         <Generator>ResXFileCodeGenerator</Generator>
         <LastGenOutput>Transfer.ru.Designer.cs</LastGenOutput>
       </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Views\Transaction\PayService.ru.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>PayService.ru.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
     </ItemGroup>
 
     <ItemGroup>
@@ -63,6 +67,11 @@
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>
         <DependentUpon>Transfer.ru.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\Views\Transaction\PayService.ru.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>PayService.ru.resx</DependentUpon>
       </Compile>
     </ItemGroup>
 

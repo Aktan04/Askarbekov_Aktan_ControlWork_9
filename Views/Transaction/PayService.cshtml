@@ -1,8 +1,10 @@
 @model Cw9.ViewModels.PayServiceViewModel
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 
 <form asp-action="PayService" method="post">
     <div class="form-group">
-        <label asp-for="ServiceProviderId">Поставщик услуг</label>
+        <label asp-for="ServiceProviderId">@Localizer["Provider"]</label>
         <select asp-for="ServiceProviderId" class="form-control">
             @foreach (var provider in ViewBag.ServiceProviders as List<ServiceProvider>)
             {
@@ -12,14 +14,14 @@
         <span asp-validation-for="ServiceProviderId" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Identifier">Личный реквизит</label>
+        <label asp-for="Identifier">@Localizer["PersonalAccount"]</label>
         <input asp-for="Identifier" class="form-control" />
         <span asp-validation-for="Identifier" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Amount">Сумма</label>
+        <label asp-for="Amount">@Localizer["Amount"]</label>
         <input asp-for="Amount" class="form-control" />
         <span asp-validation-for="Amount" class="text-danger"></span>
     </div>
-    <button type="submit" class="btn btn-primary">Оплатить</button>
+    <button type="submit" class="btn btn-primary">@Localizer["Pay"]</button>
 </form>
