@@ -22,13 +22,13 @@ public class WalletContext : IdentityDbContext<User, IdentityRole<int>, int>
             .HasOne(t => t.FromUser)
             .WithMany(u => u.TransactionsFrom)
             .HasForeignKey(t => t.FromUserId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<Transaction>()
             .HasOne(t => t.ToUser)
             .WithMany(u => u.TransactionsTo)
             .HasForeignKey(t => t.ToUserId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.Cascade);
         
         modelBuilder.Entity<ServiceProvider>().HasData(
             new ServiceProvider { Id = 1, Name = "Operator A" },

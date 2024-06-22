@@ -1,12 +1,36 @@
-
+@model List<User>
 @{
     ViewBag.Title = "title";
     Layout = "_Layout";
+
 }
 
-<h2>Добро пожаловать</h2>
+<h2>Список пользователей</h2>
 
-@if (User.Identity.IsAuthenticated)
-{
-    <p>Ваш баланс: @ViewBag.Balance</p>
-}
+<table class="table">
+    <thead>
+    <tr>
+        <th>UserName</th>
+        <th>Email</th>
+        <th>Personal Account</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var user in Model)
+    {
+        <tr>
+            
+            <td><a asp-action="Profile" asp-controller="Account" asp-route-userId="@user.Id">@user.UserName</a></td>
+            <td>@user.Email</td>
+            <td>@user.PersonalAccount</td>
+            <td>
+                    
+                
+                <a class="btn btn-secondary" asp-action="Edit" asp-controller="Account" asp-route-id="@user.Id">Редактировать</a>
+                <a class="btn bg-danger" asp-action="Delete" asp-controller="Account" asp-route-id="@user.Id">Удалить пользователя</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

@@ -70,6 +70,11 @@ public class TransactionController : Controller
             ModelState.AddModelError("RecipientAccountNumber", "Счет получателя не найден");
             return View();
         }
+        if (model.Amount < 0)
+        {
+            ModelState.AddModelError("Amount", "Сумма не может быть отрицательной");
+            return View();
+        }
 
 
         Transaction transactionSender = new Transaction();

@@ -21,25 +21,32 @@ public class AccountController : Controller
         _signInManager = signInManager;
     }
     
+    [Authorize(Roles = "admin")]
     public async Task<IActionResult> Index()
     {
         if (User.Identity.IsAuthenticated)
         {
-            var user = await _userManager.GetUserAsync(User);
-            ViewBag.Balance = user?.Balance ?? 0;
+            if (User.IsInRole("admin"))
+            {
+                var users = await _context.Users.Where(u => u.Id > 1).ToListAsync();
+                return View(users);
+            }
         }
-        else
-        {
-            ViewBag.Balance = 0;
-        }
-        
-        return View();
+
+        return NotFound();
     }
     
     [Authorize]
-    public async Task<IActionResult> Profile()
+    public async Task<IActionResult> Profile(int? userId)
     {
-        
+        if (User.IsInRole("admin"))
+        {
+            if (userId != null)
+            {
+                var getUser = _context.Users.FirstOrDefault(u => u.Id == userId);
+                return View(getUser);
+            }
+        }
         var user = await _userManager.GetUserAsync(User);
         if (user == null)
         {
@@ -59,26 +66,49 @@ public class AccountController : Controller
         var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
         if (user != null && (userId == id || User.IsInRole("admin")))
         {
-            return View(user);
+            var model = new EditUserViewModel
+            {
+                Id = user.Id,
+                Email = user.Email,
+                UserName = user.UserName,
+                PersonalAccount = user.PersonalAccount,
+                IsNeededNewPersonalAccount = false
+            };
+            return View(model);
         }
 
         return NotFound();
     }
 
     [HttpPost]
-    public async Task<IActionResult> Edit(User user)
+    public async Task<IActionResult> Edit(EditUserViewModel model)
     {
-        if (_context.Users.Any(u => u.Email == user.Email && u.Id != user.Id))
+        if (_context.Users.Any(u => u.Email == model.Email && u.Id != model.Id))
         {
             ModelState.AddModelError(string.Empty, "Логин уже существует");
-            return View(user);
+            return View(model);
         }
-        User? identityUser = await _userManager.FindByIdAsync(Convert.ToString(user.Id));
+        User? identityUser = await _userManager.FindByIdAsync(Convert.ToString(model.Id));
         if (identityUser != null)
         {
+            if (model.IsNeededNewPersonalAccount)
+            {
+                Random random = new Random();
+                string accountNumber;
+                do
+                {
+                    accountNumber = Convert.ToString(random.Next(100000, 999999));
+                } while (_context.Users.Any(u => u.PersonalAccount.Equals(accountNumber)));
+
+                identityUser.PersonalAccount = accountNumber;
+            }
             if (ModelState.IsValid)
             {
-                identityUser.Email = user.Email;
+                identityUser.Email = model.Email;
+                identityUser.UserName = model.UserName;
+                identityUser.PasswordHash = model.Password != null
+                    ? _userManager.PasswordHasher.HashPassword(identityUser, model.Password)
+                    : identityUser.PasswordHash;
                 var result = await _userManager.UpdateAsync(identityUser);
                 if (result.Succeeded)
                 {
@@ -92,7 +122,40 @@ public class AccountController : Controller
             }
         }
 
-        return View(user);
+        return View(model);
+    }
+    
+    [Authorize]
+    [HttpGet]
+    [ActionName("Delete")]
+    [Authorize(Roles = "admin")]
+    public async Task<IActionResult> ConfirmDelete(int? id)
+    {
+        if (id != null)
+        {
+            User? user = await _context.Users.FirstOrDefaultAsync(p => p.Id == id);
+            if (user != null && User.IsInRole("admin"))
+            {
+                return View(user);
+            }
+        }
+        return NotFound();
+    }
+    
+    [HttpPost]
+    public async Task<IActionResult> Delete(int? id)
+    {
+        if (id != null)
+        {
+            var user = await _context.Users.FindAsync(id);
+            if (user != null)
+            {
+                _context.Users.Remove(user);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+        }
+        return NotFound();
     }
     
     [HttpGet]
