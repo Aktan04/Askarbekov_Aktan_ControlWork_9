@@ -3,6 +3,7 @@ using System;
 using Cw9.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Cw9.Migrations
 {
     [DbContext(typeof(WalletContext))]
-    partial class WalletContextModelSnapshot : ModelSnapshot
+    [Migration("20240622072719_AddModelOfTransaction")]
+    partial class AddModelOfTransaction
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,10 +43,10 @@ namespace Cw9.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int?>("FromUserId")
+                    b.Property<int>("FromUserId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("ToUserId")
+                    b.Property<int?>("ToUserId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -265,13 +268,13 @@ namespace Cw9.Migrations
                     b.HasOne("Cw9.Models.User", "FromUser")
                         .WithMany("TransactionsFrom")
                         .HasForeignKey("FromUserId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("Cw9.Models.User", "ToUser")
                         .WithMany("TransactionsTo")
                         .HasForeignKey("ToUserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("FromUser");
 

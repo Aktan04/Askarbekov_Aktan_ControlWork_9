@@ -1,0 +1,27 @@
+@model User
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card profile-card">
+                <div class="card-header text-center">
+                    <i class="fas fa-user-circle profile-icon"></i>
+                    <h3 class="mt-2">@Model.UserName</h3>
+                    <p class="profile-email"><i class="fas fa-envelope"></i> @Model.Email</p>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Информация о пользователе</h5>
+                    <p class="card-text"><strong>Номер счета:</strong> @Model.PersonalAccount</p>
+                    <p class="card-text"><strong>Баланс:</strong> @Model.Balance.ToString("C")</p>
+                    <a href="@Url.Action("Edit", "Account", new { id = @Model.Id })" class="btn btn-primary mt-3">Редактировать профиль</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
