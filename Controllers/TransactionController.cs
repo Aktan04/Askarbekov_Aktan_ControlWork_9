@@ -25,7 +25,7 @@ public class TransactionController : Controller
     public async Task<IActionResult> Index(DateTime? fromDate, DateTime? toDate)
     {
         var user = await _userManager.GetUserAsync(User);
-        
+        ViewBag.Balance = user.Balance;
         if (user == null)
         {
             return NotFound("Пользователь не найден");
@@ -109,6 +109,7 @@ public class TransactionController : Controller
             
             transactionRecipient.Description =
                 $"Получение средств от счета {sender.PersonalAccount}({sender.UserName})";
+            transactionRecipient.CounterParty = sender.UserName;
             _context.Transactions.Add(transactionSender);
             _context.Users.Update(sender);
 

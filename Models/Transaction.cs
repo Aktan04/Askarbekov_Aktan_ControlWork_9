@@ -9,6 +9,7 @@ public class Transaction
     public decimal Amount { get; set; }
         
     public string Description { get; set; }
+    public string? CounterParty { get; set; }
         
     public int? FromUserId { get; set; }
     public User? FromUser { get; set; }

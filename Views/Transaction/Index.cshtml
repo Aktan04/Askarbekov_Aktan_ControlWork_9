@@ -7,7 +7,7 @@
 
 
 <h2>История транзакций</h2>
-
+<h3>Баланс: @ViewBag.Balance</h3>
 <form method="get" asp-action="Index">
     <div class="form-group">
         <label for="fromDate">Дата с:</label>
@@ -36,7 +36,18 @@
                 <td>@transaction.Date.ToString("dd.MM.yyyy HH:mm")</td>
                 <td>@transaction.Amount</td>
                 <td>@transaction.Description</td>
-                <td>@transaction.FromUser?.UserName ?? "N/A"</td>
+                @if (transaction.CounterParty != null)
+                {
+                    <td>@transaction.CounterParty</td>
+                }
+                else if (transaction.FromUser?.UserName != null)
+                {
+                    <td>@transaction.FromUser?.UserName</td>
+                }
+                else
+                {
+                    <td>Аноним</td>
+                }
             </tr>
         }
     </tbody>
