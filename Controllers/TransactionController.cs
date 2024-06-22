@@ -63,7 +63,7 @@ public class TransactionController : Controller
     public async Task<IActionResult> Transfer(TransferViewModel model)
     {
         var sender = await _userManager.GetUserAsync(User);
-        var recipient = await _context.Users.FirstOrDefaultAsync(u => u.PersonalAccount == model.RecipientAccountNumber);
+        var recipient = await _context.Users.FirstOrDefaultAsync(u => u.PersonalAccount.Equals(model.RecipientAccountNumber));
 
         if (recipient == null)
         {

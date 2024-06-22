@@ -168,8 +168,9 @@ namespace Cw9.Migrations
                     b.Property<string>("PasswordHash")
                         .HasColumnType("text");
 
-                    b.Property<int>("PersonalAccount")
-                        .HasColumnType("integer");
+                    b.Property<string>("PersonalAccount")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("text");

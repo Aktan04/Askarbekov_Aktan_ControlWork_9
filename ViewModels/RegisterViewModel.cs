@@ -12,8 +12,8 @@ public class RegisterViewModel
     
     [Required(ErrorMessage = "Не указано имя пользователя")]
     public string UserName { get; set; }
-    
-    public int PersonalAccount { get; set; }
+    [Required]
+    public string PersonalAccount { get; set; }
     
     [Required(ErrorMessage = "Не указан пароль")]
     [MinLength(3, ErrorMessage = "Пароль должен содержать не менее 6 символов")]

@@ -110,7 +110,7 @@ public class AccountController : Controller
             User? user = await _userManager.FindByEmailAsync(model.EmailOrLogin);
             if (user == null)
             {
-                user = await _context.Users.FirstOrDefaultAsync(u => u.PersonalAccount == Convert.ToInt32(model.EmailOrLogin));
+                user = await _context.Users.FirstOrDefaultAsync(u => u.PersonalAccount.Equals(model.EmailOrLogin));
             }
             if (user != null)
             {
@@ -136,11 +136,11 @@ public class AccountController : Controller
     public IActionResult Register()
     {
         Random random = new Random();
-        int accountNumber;
+        string accountNumber;
         do
         {
-            accountNumber = random.Next(100000, 999999);
-        } while (_context.Users.Any(u => u.PersonalAccount == accountNumber));
+            accountNumber = Convert.ToString(random.Next(100000, 999999));
+        } while (_context.Users.Any(u => u.PersonalAccount.Equals(accountNumber)));
         return View(new RegisterViewModel(){PersonalAccount = accountNumber});
     }
 
