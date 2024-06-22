@@ -1,0 +1,48 @@
+@model List<Transaction>
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+
+<h2>История транзакций</h2>
+
+<form method="get" asp-action="Index">
+    <div class="form-group">
+        <label for="fromDate">Дата с:</label>
+        <input type="date" name="fromDate" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label for="toDate">Дата по:</label>
+        <input type="date" name="toDate" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Фильтровать</button>
+</form>
+
+<table class="table table-striped mt-3">
+    <thead>
+        <tr>
+            <th>Дата</th>
+            <th>Сумма</th>
+            <th>Описание</th>
+            <th>Контрагент</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var transaction in Model)
+        {
+            <tr>
+                <td>@transaction.Date.ToString("dd.MM.yyyy HH:mm")</td>
+                <td>@transaction.Amount</td>
+                <td>@transaction.Description</td>
+                <td>@transaction.FromUser?.UserName ?? "N/A"</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (!Model.Any())
+{
+    <p>Нет транзакций за выбранный период.</p>
+}

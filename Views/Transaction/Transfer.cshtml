@@ -1,0 +1,36 @@
+@model Cw9.ViewModels.TransferViewModel
+
+@{
+    ViewBag.Title = "Перевод средств";
+    Layout = "_Layout";
+}
+
+<h2>Перевод средств</h2>
+
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-success">@ViewBag.Message</div>
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Transfer" method="post">
+            @Html.ValidationSummary(true)
+            <div class="form-group">
+                <label asp-for="RecipientAccountNumber" class="control-label">Номер счета получателя</label>
+                <input asp-for="RecipientAccountNumber" class="form-control" />
+                <span asp-validation-for="RecipientAccountNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Amount" class="control-label">Сумма перевода</label>
+                <input asp-for="Amount" class="form-control" />
+                <span asp-validation-for="Amount" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Перевести</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
