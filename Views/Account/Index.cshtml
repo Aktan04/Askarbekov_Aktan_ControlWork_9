@@ -1,0 +1,12 @@
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<h2>Добро пожаловать</h2>
+
+@if (User.Identity.IsAuthenticated)
+{
+    <p>Ваш баланс: @ViewBag.Balance</p>
+}
