@@ -20,3 +20,29 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.profile-card {
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 10px;
+}
+.profile-icon {
+  font-size: 150px;
+  color: #343a40;
+}
+.profile-card .card-header {
+  background-color: #343a40;
+  color: #fff;
+  border-bottom: 1px solid #dee2e6;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+.profile-email {
+  font-size: 1.1em;
+}
+.profile-card .card-body {
+  padding: 20px;
+}
+.profile-card .btn {
+  width: 100%;
+}
