@@ -36,31 +36,6 @@ public class AccountController : Controller
         return View();
     }
     
-    [HttpGet]
-    public IActionResult Replenish()
-    {
-        return View();
-    }
-
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Replenish(int accountNumber, int amount)
-    {
-        var user = await _context.Users.FirstOrDefaultAsync(u => u.PersonalAccount == accountNumber);
-        if (user == null)
-        {
-            ModelState.AddModelError("", "Счет не найден");
-            return View();
-        }
-
-        user.Balance += amount;
-        _context.Users.Update(user);
-        await _context.SaveChangesAsync();
-
-        ViewBag.Message = "Счет успешно пополнен";
-        return View();
-    }
-    
     [Authorize]
     public async Task<IActionResult> Profile()
     {

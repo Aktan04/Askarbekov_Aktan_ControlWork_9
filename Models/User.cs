@@ -8,4 +8,7 @@ public class User : IdentityUser<int>
 {
     public int PersonalAccount { get; set; }
     public int Balance { get; set; }
+    
+    public ICollection<Transaction>? TransactionsFrom { get; set; }
+    public ICollection<Transaction>? TransactionsTo { get; set; } 
 }
