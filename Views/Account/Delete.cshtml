@@ -1,3 +1,5 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 @model User
 
 @{
@@ -9,23 +11,23 @@
     <div class="row">
         <div class="col-4 mx-auto border border-4 py-3">
             <dl class="dl-horizontal ">
-                <dt>Имя</dt>
+                <dt>@Localizer["Name"]</dt>
                 <dd>
                     @Html.DisplayFor(model => model.UserName)
                 </dd>
-            
-                <dt>Email</dt>
+
+                <dt>@Localizer["Email"]</dt>
                 <dd>
                     @Html.DisplayFor(model => model.Email)
                 </dd>
-            
-                <dt>Персональный счет</dt>
+
+                <dt>@Localizer["PersonalAcc"]</dt>
                 <dd>
                     @Html.DisplayFor(model => model.PersonalAccount)
                 </dd>
             </dl>
             <form asp-controller="Account" asp-action="Delete" method="post">
-                <button type="submit" class="btn btn-danger rounded-0 px-3 py-2 ">Удалить</button>
+                <button type="submit" class="btn btn-danger rounded-0 px-3 py-2 ">@Localizer["Delete"]</button>
             </form>
         </div>
     </div>

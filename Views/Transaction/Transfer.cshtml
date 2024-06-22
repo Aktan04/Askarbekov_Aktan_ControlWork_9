@@ -1,11 +1,12 @@
 @model Cw9.ViewModels.TransferViewModel
-
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 @{
     ViewBag.Title = "Перевод средств";
     Layout = "_Layout";
 }
 
-<h2>Перевод средств</h2>
+<h2>@Localizer["Transact"]</h2>
 
 @if (ViewBag.Message != null)
 {
@@ -17,16 +18,16 @@
         <form asp-action="Transfer" method="post">
             @Html.ValidationSummary(true)
             <div class="form-group">
-                <label asp-for="RecipientAccountNumber" class="control-label">Номер счета получателя</label>
+                <label asp-for="RecipientAccountNumber" class="control-label">@Localizer["PersonalAcc"]</label>
                 <input asp-for="RecipientAccountNumber" class="form-control" />
                 <span asp-validation-for="RecipientAccountNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Amount" class="control-label">Сумма перевода</label>
+                <label asp-for="Amount" class="control-label">@Localizer["Amount"]</label>
                 <input asp-for="Amount" class="form-control" />
                 <span asp-validation-for="Amount" class="text-danger"></span>
             </div>
-            <button type="submit" class="btn btn-primary">Перевести</button>
+            <button type="submit" class="btn btn-primary">@Localizer["Transfer"]</button>
         </form>
     </div>
 </div>

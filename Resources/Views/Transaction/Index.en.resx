@@ -1,0 +1,47 @@
+<root>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="Date" xml:space="preserve">
+        <value>Date</value>
+    </data>
+    <data name="Amount" xml:space="preserve">
+        <value>Amount</value>
+    </data>
+    <data name="CounterParty" xml:space="preserve">
+        <value>CounterParty</value>
+    </data>
+    <data name="Desc" xml:space="preserve">
+        <value>Description</value>
+    </data>
+    <data name="DateFrom" xml:space="preserve">
+        <value>Date from</value>
+    </data>
+    <data name="DateTo" xml:space="preserve">
+        <value>Date to</value>
+    </data>
+    <data name="Filter" xml:space="preserve">
+        <value>Filter</value>
+    </data>
+    <data name="Balance" xml:space="preserve">
+        <value>Balance:</value>
+    </data>
+    <data name="History" xml:space="preserve">
+        <value>History of transactions</value>
+    </data>
+    <data name="Anonim" xml:space="preserve">
+        <value>Anonimous</value>
+    </data>
+    <data name="LackOfTransaction" xml:space="preserve">
+        <value>Lack of Transaction</value>
+    </data>
+</root>

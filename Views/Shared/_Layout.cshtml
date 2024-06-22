@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
     <link rel="stylesheet" href="~/Cw9.styles.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
 </head>
 <body>
 <header>
@@ -23,6 +25,12 @@
                     {
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">Выход</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Profile">Профиль</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Transaction" asp-action="Index">История</a>
                         </li>
                     }
                     else
@@ -46,12 +54,6 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Transaction" asp-action="PayService">Оплата услуг</a>
                         </li>
                     }
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Profile">Профиль</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Transaction" asp-action="Index">История</a>
-                    </li>
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Transaction" asp-action="Transfer">Перевод средств</a>
                     </li>

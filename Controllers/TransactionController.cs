@@ -36,11 +36,13 @@ public class TransactionController : Controller
 
         if (fromDate.HasValue)
         {
+            fromDate = fromDate.Value.ToUniversalTime().AddHours(6);
             transactionsQuery = transactionsQuery.Where(t => t.Date >= fromDate.Value);
         }
 
         if (toDate.HasValue)
         {
+            toDate = toDate.Value.ToUniversalTime().AddHours(6);
             transactionsQuery = transactionsQuery.Where(t => t.Date <= toDate.Value);
         }
 

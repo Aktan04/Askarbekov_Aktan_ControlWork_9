@@ -1,39 +1,40 @@
 @model List<Transaction>
-
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 @{
     ViewBag.Title = "title";
     Layout = "_Layout";
 }
 
 
-<h2>История транзакций</h2>
-<h3>Баланс: @ViewBag.Balance</h3>
+<h2>@Localizer["History"]</h2>
+<h3>@Localizer["Balance"] @ViewBag.Balance</h3>
 <form method="get" asp-action="Index">
     <div class="form-group">
-        <label for="fromDate">Дата с:</label>
-        <input type="date" name="fromDate" class="form-control" />
+        <label for="fromDate">@Localizer["DateFrom"]</label>
+        <input type="datetime-local" name="fromDate" class="form-control" />
     </div>
     <div class="form-group">
-        <label for="toDate">Дата по:</label>
-        <input type="date" name="toDate" class="form-control" />
+        <label for="toDate">@Localizer["DateTo"]</label>
+        <input type="datetime-local" name="toDate" class="form-control" />
     </div>
-    <button type="submit" class="btn btn-primary">Фильтровать</button>
+    <button type="submit" class="btn btn-primary">@Localizer["Filter"]</button>
 </form>
 
 <table class="table table-striped mt-3">
     <thead>
         <tr>
-            <th>Дата</th>
-            <th>Сумма</th>
-            <th>Описание</th>
-            <th>Контрагент</th>
+            <th>@Localizer["Date"]</th>
+            <th>@Localizer["Amount"]</th>
+            <th>@Localizer["Desc"]</th>
+            <th>@Localizer["CounterParty"]</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var transaction in Model)
         {
             <tr>
-                <td>@transaction.Date.ToString("dd.MM.yyyy HH:mm")</td>
+                <td>@transaction.Date.ToString()</td>
                 <td>@transaction.Amount</td>
                 <td>@transaction.Description</td>
                 @if (transaction.CounterParty != null)
@@ -46,7 +47,7 @@
                 }
                 else
                 {
-                    <td>Аноним</td>
+                    <td>@Localizer["Anonim"]</td>
                 }
             </tr>
         }
@@ -55,5 +56,5 @@
 
 @if (!Model.Any())
 {
-    <p>Нет транзакций за выбранный период.</p>
+    <p>@Localizer["LackOfTransaction"]</p>
 }
